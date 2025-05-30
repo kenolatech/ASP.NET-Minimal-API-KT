@@ -22,16 +22,6 @@ logger.LogInformation($"Application starting on port {port}");
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
-app.Use(async (context, next) =>
-{
-    var stopwatch = Stopwatch.StartNew();
-
-    await next(); // Process the request
-
-    stopwatch.Stop();
-    logger.LogInformation($"{context.Request.Method} {context.Request.Path} responded {context.Response.StatusCode} in {stopwatch.ElapsedMilliseconds}ms");
-});
-
 // API routes with logging
 app.MapGet("/api/health", (ILogger<Program> logger) =>
 {
