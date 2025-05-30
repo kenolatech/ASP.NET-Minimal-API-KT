@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Awesome API - Powered by Railway</title>
+    <style>
+        /* CSS Variables for easy theming */
+        :root {
+            --primary-color: #5856d6;
+            --secondary-color: #f64f59;
+            --text-color: #2c3e50;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: var(--bg-color);
+        }
+
+        /* Header with gradient background */
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: drift 20s linear infinite;
+        }
+
+        @keyframes drift {
+            to { transform: translate(50px, 50px); }
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Container for content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Feature cards */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .feature-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* API Status Section */
+        .api-status {
+            background: var(--card-bg);
+            padding: 3rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            margin: 4rem 0;
+            text-align: center;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #27ae60;
+            margin-right: 10px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(39, 174, 96, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(39, 174, 96, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(39, 174, 96, 0); }
+        }
+
+        /* Try It Section */
+        .try-it {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem;
+            border-radius: 10px;
+            margin: 4rem 0;
+        }
+
+        .endpoint-demo {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .endpoint-demo button {
+            background: white;
+            color: var(--primary-color);
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s ease;
+        }
+
+        .endpoint-demo button:hover {
+            transform: scale(1.05);
+        }
+
+        .response-box {
+            background: rgba(0,0,0,0.2);
+            padding: 1rem;
+            border-radius: 5px;
+            margin-top: 1rem;
+            white-space: pre-wrap;
+            font-size: 0.9rem;
+            min-height: 60px;
+            display: none;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: #7f8c8d;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>🚀 My Awesome API</h1>
+            <p>Powered by ASP.NET Minimal API & Railway</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="features">
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Lightning Fast</h3>
+                <p>Built with ASP.NET Minimal API for maximum performance and minimal overhead. Response times measured in milliseconds.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🔧</div>
+                <h3>Developer Friendly</h3>
+                <p>Clean, intuitive API design with comprehensive documentation. Get started in minutes with our simple endpoints.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">📈</div>
+                <h3>Scalable</h3>
+                <p>Deployed on Railway's cloud infrastructure. Automatically scales to handle your traffic demands.</p>
+            </div>
+        </section>
+
+        <section class="api-status">
+            <h2>API Status</h2>
+            <p>
+                <span class="status-indicator"></span>
+                <span id="status-text">Checking API status...</span>
+            </p>
+            <p id="api-info" style="margin-top: 1rem; color: #7f8c8d;"></p>
+        </section>
+
+        <section class="try-it">
+            <h2>Try It Out!</h2>
+            <p>Test our API endpoints directly from your browser:</p>
+            
+            <div class="endpoint-demo">
+                <strong>GET /api/health</strong>
+                <button onclick="testEndpoint('/api/health', 'health-response')">Test Endpoint</button>
+                <div id="health-response" class="response-box"></div>
+            </div>
+            
+            <div class="endpoint-demo">
+                <strong>GET /api/info</strong>
+                <button onclick="testEndpoint('/api/info', 'info-response')">Test Endpoint</button>
+                <div id="info-response" class="response-box"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>Built with ❤️ using ASP.NET Core | Deployed on Railway</p>
+            <p>&copy; 2024 My Awesome API. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Check API status on page load
+        async function checkApiStatus() {
+            try {
+                const response = await fetch('/api/health');
+                const data = await response.json();
+                
+                if (response.ok) {
+                    document.getElementById('status-text').textContent = 'API is operational';
+                    document.querySelector('.status-indicator').style.background = '#27ae60';
+                    document.getElementById('api-info').textContent = `Last checked: ${new Date().toLocaleTimeString()}`;
+                }
+            } catch (error) {
+                document.getElementById('status-text').textContent = 'API is offline';
+                document.querySelector('.status-indicator').style.background = '#e74c3c';
+                document.querySelector('.status-indicator').style.animation = 'none';
+            }
+        }
+
+        // Test API endpoints
+        async function testEndpoint(endpoint, responseId) {
+            const responseBox = document.getElementById(responseId);
+            responseBox.style.display = 'block';
+            responseBox.textContent = 'Loading...';
+            
+            try {
+                const response = await fetch(endpoint);
+                const data = await response.json();
+                responseBox.textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                responseBox.textContent = `Error: ${error.message}`;
+            }
+        }
+
+        // Run status check on page load
+        checkApiStatus();
+        
+        // Refresh status every 30 seconds
+        setInterval(checkApiStatus, 30000);
+    </script>
+</body>
+</html>
