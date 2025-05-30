@@ -1,3 +1,6 @@
+using System.Diagnostics; // This is where Stopwatch lives
+using System.Text.Json;    // This is where JsonSerializer lives
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Configure logging
