@@ -39,7 +39,57 @@ app.MapGet("/api/info", () => new
     environment = app.Environment.EnvironmentName
 });
 
-// Don't use a catch-all fallback for now
-// Just let 404s be 404s until we confirm everything else works
+app.MapFallback(async context =>
+{
+    var path = context.Request.Path.Value ?? "";
+
+    // For API routes, return JSON error
+    if (path.StartsWith("/api", StringComparison.OrdinalIgnoreCase))
+    {
+        context.Response.StatusCode = 404;
+        context.Response.ContentType = "application/json";
+        await context.Response.WriteAsync(
+            System.Text.Json.JsonSerializer.Serialize(new
+            {
+                error = "API endpoint not found",
+                path = path
+            })
+        );
+        return;
+    }
+
+    // For paths that look like files (have extensions), just return 404
+    // This handles missing images, CSS, JS, etc.
+    if (Path.HasExtension(path))
+    {
+        context.Response.StatusCode = 404;
+        return;
+    }
+
+    // For the root path specifically, let's not interfere
+    // This allows index.html to be served
+    if (path == "/" || path == "")
+    {
+        // Don't handle this - let it 404 naturally if index.html doesn't exist
+        context.Response.StatusCode = 404;
+        return;
+    }
+
+    // For other paths without extensions, show custom 404 page
+    // These are likely meant to be routes like "/about" or "/contact"
+    context.Response.StatusCode = 404;
+    context.Response.ContentType = "text/html";
+    await context.Response.WriteAsync(@"
+        <!DOCTYPE html>
+        <html>
+        <head><title>Page Not Found</title></head>
+        <body>
+            <h1>404 - Page Not Found</h1>
+            <p>Sorry, the page you're looking for doesn't exist.</p>
+            <a href='/'>Return to Home</a>
+        </body>
+        </html>
+    ");
+});
 
 app.Run();
