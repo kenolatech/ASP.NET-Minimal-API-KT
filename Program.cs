@@ -13,6 +13,13 @@ app.UseStaticFiles();
 // API routes
 app.MapGet("/api/health", () => Results.Ok(new { status = "healthy", timestamp = DateTime.UtcNow }));
 
+app.MapGet("/api/info", () => new
+{
+    message = "Welcome to my ASP.NET Minimal API!",
+    version = "1.0.0",
+    environment = app.Environment.EnvironmentName
+});
+
 // Don't use a catch-all fallback for now
 // Just let 404s be 404s until we confirm everything else works
 
